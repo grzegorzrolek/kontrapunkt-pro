@@ -1,0 +1,29 @@
+# Family-wide feature file for Kontrapunkt Pro project directory
+# Copyright 2012 Grzegorz Rolek
+
+languagesystem DFLT dflt;
+languagesystem latn dflt;
+
+lookup LIGATURES {
+	sub f i by fi;
+	sub f l by fl;
+} LIGATURES;
+
+
+# Part of those records comes from the original Notice string of Kontrapunkt's files.
+# Note that entries ID 1–6 are read from the font menu name listing and will be ignored herein.
+
+table name {
+	nameid 0 "Designed by Bo Linnemann"; # Copyright
+	nameid 0 1 "Designed by Bo Linnemann"; # Copyright
+	nameid 8 "Kontrapunkt A/S"; # Manufacturer
+	nameid 8 1 "Kontrapunkt A/S"; # Manufacturer
+	nameid 9 "Bo Linnemann"; # Designer
+	nameid 9 1 "Bo Linnemann"; # Designer
+	nameid 11 "http://kontrapunkt.com"; # Foundry URL
+	nameid 11 1 "http://kontrapunkt.com"; # Foundry URL
+	nameid 13 "Creative Commons Attribution-ShareAlike 3.0 Unported License"; # License
+	nameid 13 1 "Creative Commons Attribution-ShareAlike 3.0 Unported License"; # License
+	nameid 14 "http://creativecommons.org/licenses/by-sa/3.0/"; # License URL
+	nameid 14 1 "http://creativecommons.org/licenses/by-sa/3.0/"; # License URL
+} name;

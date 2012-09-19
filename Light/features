@@ -1,0 +1,23 @@
+# Font-specific feature file for Kontrapunkt Pro project directory
+# Copyright 2012 Grzegorz Rolek
+
+
+include (./fontrev);
+include (../features.family);
+
+table OS/2 {
+	Panose 2 0 5 3 5 0 0 2 0 3;
+	FSType 0;
+} OS/2;
+
+feature liga {
+	lookup LIGATURES;
+} liga;
+
+
+# Kerning is translated from AFM files on build.
+# See the build.sh for details.
+
+feature kern {
+	include (./features.kern);
+} kern;

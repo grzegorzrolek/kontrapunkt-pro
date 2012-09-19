@@ -1,0 +1,20 @@
+# Kontrapunkt's original release
+Kontrapunkt
+
+# One-time dumps
+empty.enc
+
+# Intermediate builds
+*.list
+*.map
+!shift.map
+*.pfa
+features.kern
+fontrev
+
+# FDK's junk and logs
+current.fpr
+*.log*
+
+# Final builds
+build

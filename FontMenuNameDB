@@ -1,0 +1,28 @@
+# Font menu name listing for Kontrapunkt Pro project directory
+# Copyright 2012 Grzegorz Rolek
+#
+# See Adobe's MakeOTF User Guide for the spec.
+#
+# [PostScript Name]
+# 	f=Family Name
+# 	s=Style Name
+# 	l=Windows Compatible Menu Name
+# 	m=1,Macintosh Compatible Menu Name
+
+[KontrapunktPro-Light]
+	f=Kontrapunkt Pro
+	s=Light
+	l=Kontrapunkt Pro
+	m=1,Kontrapunkt Pro
+
+[KontrapunktPro-LightItalic]
+	f=Kontrapunkt Pro
+	s=Light Italic
+	l=Kontrapunkt Pro
+	m=1,Kontrapunkt Pro Light Italic
+
+[KontrapunktPro-Bold]
+	f=Kontrapunkt Pro
+	s=Bold
+	l=Kontrapunkt Pro
+	m=1,Kontrapunkt Pro Bold

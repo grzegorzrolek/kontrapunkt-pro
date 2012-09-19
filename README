@@ -1,0 +1,49 @@
+KONTRAPUNKT PRO OPENTYPE FONT FAMILY
+
+Kontrapunkt is a Type 1 font family made public by Kontrapunkt studio
+in Copenhagen. This is a project to make an OpenType version of the family
+with extra glyphs, layout features and broader language support. The
+challenge is a build system that reads in the original Kontrapunkt font
+release with no or minimal intervention in its contents.
+
+
+BUILD SETTING & STRATEGY
+
+Base glyph material is read at build time from Kontrapunkt Type 1 font
+files. These files are the original Kontrapunkt font files and they're
+kept intact throughout the development process. You can also put your
+own copy of the original release in place of the one stored in this
+repository.
+
+Extra glyph set is prepared in form of separate Type 1 font families and
+merged with the base family on build. That is old school, but it makes
+the work on glyph repertory more disciplined. Furthermore, the extra
+families are developed with bare PostScript code that can be read and
+versioned properly.
+
+Necessary OpenType production files are maintained, but things that can
+be derived from the Type 1 families are derived programmatically on
+build. This includes a new font metrics file for the Kontrapunkt family,
+updated with kerning listing originally found in the printer binaries
+only.
+
+
+SYSTEM REQUIREMENTS
+
+You will need a Unix system with Adobe Font Development Kit for OpenType
+available at http://adobe.com/devnet/opentype/afdko.html and LCDF
+Typetools with Type 1 Utilities at http://lcdf.org/type/. Because
+Adobe's FDK is Mac/Windows-only, this particular setting is currently
+possible with OS X alone.
+
+
+CREDITS & LICENSE NOTICE
+
+Kontrapunkt typeface was designed by Bo Linnemann and awarded with
+Danish Design Prize 2004: Typeface of the year. Read more and get the
+original release at http://kontrapunkt.com/type/.
+
+This work is not in any way affiliated with Kontrapunkt's author; it's
+a derived work made public under the same, Creative Commons
+Attribution-ShareAlike 3.0 Unported license. See the Kontrapunkt release
+directory for the legalese. Copyright by Grzegorz Rolek, 2012.
