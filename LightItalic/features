@@ -15,10 +15,11 @@ feature liga {
 } liga;
 
 feature case {
-	pos at <12 100 0 0>;
+	pos @CASE_PUNCTUATION <12 100 0 0>;
 	pos [questiondown exclamdown] <26 200 0 0>;
-	pos [guillemotleft guillemotright guilsinglleft guilsinglright] <3 20 0 0>;
 	pos periodcentered <11 90 0 0>;
+	pos slash <50 100 0 0>;
+	pos backslash <-25 100 0 0>;
 } case;
 
 

@@ -1,6 +1,9 @@
 # Family-wide feature file for Kontrapunkt Pro project directory
 # Copyright 2012 Grzegorz Rolek
 
+
+@CASE_PUNCTUATION = [at hyphen endash emdash bar parenleft parenright bracketleft bracketright braceleft braceright guillemotleft guilsinglleft guilsinglright guillemotright];
+
 languagesystem DFLT dflt;
 languagesystem latn dflt;
 
