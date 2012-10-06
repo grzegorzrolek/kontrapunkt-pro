@@ -61,7 +61,8 @@ one one
 two two
 three three
 four four
-five five
+# Hint exceeding the glyph's bbox.
+# five five
 six six
 seven seven
 eight eight
@@ -83,7 +84,8 @@ G G
 H H
 I I
 J J
-K K
+# Negative stem hint.
+# K K
 L L
 M M
 N N
@@ -107,7 +109,8 @@ asciicircum asciicircum
 underscore underscore
 grave grave
 a a
-b b
+# Hint exceeding the glyph's bbox.
+# b b
 c c
 d d
 e e
