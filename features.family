@@ -8,8 +8,12 @@ languagesystem DFLT dflt;
 languagesystem latn dflt;
 
 lookup LIGATURES {
+	sub f f i by ffi;
+	sub f f l by ffl;
 	sub f i by fi;
 	sub f l by fl;
+	sub f f by ff;
+	sub f j by fj;
 } LIGATURES;
 
 

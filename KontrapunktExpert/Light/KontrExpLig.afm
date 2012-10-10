@@ -7,7 +7,7 @@ Notice Designed by Bo Linnemann Ð Kontrapunkt A/S. The font may be used and dist
 Version 001.000
 IsFixedPitch false
 ItalicAngle 0.00
-FontBBox 15 -135 868 676
+FontBBox 15 -197 868 676
 Ascender 666
 Descender -199
 XHeight 465
@@ -17,7 +17,7 @@ UnderlineThickness 50
 StdHW 57
 StdVW 77
 EncodingScheme FontSpecific
-StartCharMetrics 173
+StartCharMetrics 174
 C 0 ; WX 223 ; N NUL ; B 0 0 0 0 ;
 C 9 ; WX 223 ; N HT ; B 0 0 0 0 ;
 C 10 ; WX 223 ; N LF ; B 0 0 0 0 ;
@@ -69,11 +69,11 @@ C 79 ; WX 0 ; N osuperior ; B 0 0 0 0 ;
 C 82 ; WX 0 ; N rsuperior ; B 0 0 0 0 ;
 C 83 ; WX 0 ; N ssuperior ; B 0 0 0 0 ;
 C 84 ; WX 0 ; N tsuperior ; B 0 0 0 0 ;
-C 86 ; WX 0 ; N ff ; B 0 0 0 0 ;
+C 86 ; WX 571 ; N ff ; B 15 0 586 676 ;
 C 87 ; WX 499 ; N fi ; B 15 0 455 676 ;
 C 88 ; WX 499 ; N fl ; B 15 0 455 676 ;
-C 89 ; WX 0 ; N ffi ; B 0 0 0 0 ;
-C 90 ; WX 0 ; N ffl ; B 0 0 0 0 ;
+C 89 ; WX 759 ; N ffi ; B 15 0 715 676 ;
+C 90 ; WX 759 ; N ffl ; B 15 0 715 676 ;
 C 91 ; WX 0 ; N parenleftinferior ; B 0 0 0 0 ;
 C 93 ; WX 0 ; N parenrightinferior ; B 0 0 0 0 ;
 C 94 ; WX 0 ; N Circumflexsmall ; B 0 0 0 0 ;
@@ -191,5 +191,6 @@ C 252 ; WX 0 ; N Udieresissmall ; B 0 0 0 0 ;
 C 253 ; WX 0 ; N Yacutesmall ; B 0 0 0 0 ;
 C 254 ; WX 0 ; N Thornsmall ; B 0 0 0 0 ;
 C 255 ; WX 0 ; N Ydieresissmall ; B 0 0 0 0 ;
+C -1 ; WX 495 ; N fj ; B 15 -197 415 676 ;
 EndCharMetrics
 EndFontMetrics

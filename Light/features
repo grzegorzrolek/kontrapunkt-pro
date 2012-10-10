@@ -23,9 +23,13 @@ feature case {
 } case;
 
 
-# Kerning is translated from AFM files on build.
+# Kerning internal to each subfamily's charset is translated from AFM files on build.
 # See the build.sh for details.
+# Kerning across the charsets is listed directly.
 
 feature kern {
+	pos ff t -5;
+	pos ff b 24;
+	pos ff quoteright 56;
 	include (./features.kern);
 } kern;
