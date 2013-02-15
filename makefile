@@ -78,13 +78,9 @@ $(addsuffix .pfa,$(PRO)): %/font.pfa: %/font.ps $$(addsuffix .map,$$*/base $$*/c
 	-test -f $*/shift.map && rotateFont -t1 -rtf $*/shift.map $@ $@
 	PSREV=$$(printf '%03d' $$(git rev-list HEAD -- \
 		$*/font.ps $(filter KontrapunktCE/$*/%,$(CE)).ps $(filter KontrapunktExpert/$*/%,$(EXPERT)).ps $*/*.map | wc -l)); \
-	FULL_STYLE=$$(sed 's/\([a-z][a-z]*\)\([A-Z][A-Z]*\)/\1 \2/g' <<<$*); \
 	printf '%s\n' \
-		"/^\(%!FontType1-1.1: \)..*\( [0-9]\{3\}\.\)[0-9]\{3\}$$/s//\1KontrapunktPro-$*\2$$PSREV/" \
-		"/^\(\/FontName \/\)..*\( def\)$$/s//\1KontrapunktPro-$*\2/" \
+		"/^\(%!FontType1-1.1: ..* [0-9]\{3\}\.\)[0-9]\{3\}$$/s//\1$$PSREV/" \
 		"/^\(\/version ([0-9]\{3\}\.\)[0-9]\{3\}\()\( readonly\)\{0,1\} def\)$$/s//\1$$PSREV\2/" \
-		"/^\(\/FullName (\)..*\()\( readonly\)\{0,1\} def\)$$/s//\1Kontrapunkt Pro $$FULL_STYLE\2/" \
-		"/^\(\/FamilyName (\)..*\()\( readonly\)\{0,1\} def\)$$/s//\1Kontrapunkt Pro\2/" \
 		wq | ed -s $@
 
 .SECONDEXPANSION:

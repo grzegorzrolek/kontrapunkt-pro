@@ -144,16 +144,10 @@ do
 	# Base the PostScript revision number on unique commit count of the source files involved.
 	PSREV=$(printf '%03d' $(git rev-list HEAD -- $STYLE/font.ps $CE.ps $EXPERT.ps $STYLE/*.map | wc -l))
 
-	# Figure out pretty format of style name for a dedicated PostScript entry.
-	FULL_STYLE=$(sed 's/\([a-z][a-z]*\)\([A-Z][A-Z]*\)/\1 \2/g' <<<$STYLE)
-
 	# Make the processing.
 	ed -s $STYLE/font.pfa <<<'H
-		/^\(%!FontType1-1.1: \)..*\( [0-9]\{3\}\.\)[0-9]\{3\}$/s//\1KontrapunktPro-'$STYLE'\2'$PSREV'/
-		/^\(\/FontName \/\)..*\( def\)$/s//\1KontrapunktPro-'$STYLE'\2/
+		/^\(%!FontType1-1.1: ..* [0-9]\{3\}\.\)[0-9]\{3\}$/s//\1'$PSREV'/
 		/^\(\/version ([0-9]\{3\}\.\)[0-9]\{3\}\()\( readonly\)\{0,1\} def\)$/s//\1'$PSREV'\2/
-		/^\(\/FullName (\)..*\()\( readonly\)\{0,1\} def\)$/s//\1Kontrapunkt Pro '$FULL_STYLE'\2/
-		/^\(\/FamilyName (\)..*\()\( readonly\)\{0,1\} def\)$/s//\1Kontrapunkt Pro\2/
 		wq'
 
 
