@@ -8,6 +8,8 @@ empty.enc
 *.list
 *.map
 !shift.map
+!Light/base.map
+!Bold/base.map
 *.pfa
 features.kern
 fontrev

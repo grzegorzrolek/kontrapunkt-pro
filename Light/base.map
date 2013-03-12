@@ -1,0 +1,284 @@
+mergeFonts
+
+# Mapping file for Kontrapunkt Pro project directory
+# Copyright 2012 Grzegorz Rolek
+#
+# Removing a line lets any duplicate glyph in a merge queue in.
+# Inline comments tell a reason behind each such removal.
+# See Adobe's AFDKO Tutorial for the file's spec.
+#
+# Input name Output name
+
+# Present in the source font already.
+# .notdef .notdef
+space space
+NUL NUL
+Eth Eth
+eth eth
+Lslash Lslash
+lslash lslash
+Scaron Scaron
+scaron scaron
+# Wrong contour direction.
+# Yacute Yacute
+# yacute yacute
+HT HT
+LF LF
+Thorn Thorn
+thorn thorn
+CR CR
+Zcaron Zcaron
+zcaron zcaron
+DLE DLE
+DC2 DC2
+DC3 DC3
+onehalf onehalf
+# Wrong contour direction.
+# onequarter onequarter
+onesuperior onesuperior
+# Wrong contour direction.
+# threequarters threequarters
+threesuperior threesuperior
+twosuperior twosuperior
+brokenbar brokenbar
+minus minus
+multiply multiply
+exclam exclam
+quotedbl quotedbl
+numbersign numbersign
+# Wrong contour direction.
+# dollar dollar
+percent percent
+ampersand ampersand
+quotesingle quotesingle
+parenleft parenleft
+parenright parenright
+asterisk asterisk
+plus plus
+comma comma
+hyphen hyphen
+period period
+slash slash
+zero zero
+one one
+two two
+three three
+# Wrong contour direction.
+# four four
+# five five
+six six
+seven seven
+# Path intersection.
+# eight eight
+nine nine
+colon colon
+semicolon semicolon
+less less
+equal equal
+greater greater
+question question
+at at
+A A
+B B
+C C
+D D
+E E
+F F
+G G
+H H
+I I
+J J
+K K
+L L
+M M
+# Wrong contour direction.
+# N N
+O O
+P P
+Q Q
+R R
+S S
+T T
+U U
+V V
+# Wrong contour direction.
+# W W
+X X
+# Wrong contour direction.
+# Y Y
+Z Z
+bracketleft bracketleft
+backslash backslash
+bracketright bracketright
+asciicircum asciicircum
+underscore underscore
+grave grave
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+# Wrong contour direction.
+# h h
+i i
+j j
+# Wrong contour direction.
+# k k
+l l
+m m
+# Wrong contour direction.
+# n n
+o o
+p p
+q q
+# Wrong contour direction.
+# r r
+s s
+t t
+# Wrong contour direction.
+# u u
+v v
+# Wrong contour direction.
+# w w
+# x x
+# y y
+z z
+braceleft braceleft
+bar bar
+braceright braceright
+asciitilde asciitilde
+DEL DEL
+Adieresis Adieresis
+Aring Aring
+Ccedilla Ccedilla
+Eacute Eacute
+Ntilde Ntilde
+Odieresis Odieresis
+Udieresis Udieresis
+aacute aacute
+agrave agrave
+acircumflex acircumflex
+adieresis adieresis
+atilde atilde
+aring aring
+ccedilla ccedilla
+eacute eacute
+egrave egrave
+ecircumflex ecircumflex
+edieresis edieresis
+iacute iacute
+igrave igrave
+icircumflex icircumflex
+idieresis idieresis
+ntilde ntilde
+oacute oacute
+ograve ograve
+ocircumflex ocircumflex
+odieresis odieresis
+otilde otilde
+# Wrong contour direction.
+# uacute uacute
+ugrave ugrave
+ucircumflex ucircumflex
+# Wrong contour direction.
+# udieresis udieresis
+dagger dagger
+degree degree
+cent cent
+sterling sterling
+section section
+bullet bullet
+paragraph paragraph
+germandbls germandbls
+registered registered
+copyright copyright
+# Wrong contour direction.
+# trademark trademark
+acute acute
+dieresis dieresis
+notequal notequal
+AE AE
+Oslash Oslash
+infinity infinity
+plusminus plusminus
+lessequal lessequal
+greaterequal greaterequal
+yen yen
+mu mu
+partialdiff partialdiff
+summation summation
+product product
+pi pi
+integral integral
+ordfeminine ordfeminine
+ordmasculine ordmasculine
+Omega Omega
+ae ae
+oslash oslash
+questiondown questiondown
+exclamdown exclamdown
+logicalnot logicalnot
+radical radical
+florin florin
+approxequal approxequal
+Delta Delta
+guillemotleft guillemotleft
+guillemotright guillemotright
+ellipsis ellipsis
+nbspace nbspace
+Agrave Agrave
+Atilde Atilde
+Otilde Otilde
+OE OE
+oe oe
+endash endash
+emdash emdash
+quotedblleft quotedblleft
+quotedblright quotedblright
+quoteleft quoteleft
+quoteright quoteright
+divide divide
+lozenge lozenge
+ydieresis ydieresis
+Ydieresis Ydieresis
+fraction fraction
+currency currency
+guilsinglleft guilsinglleft
+guilsinglright guilsinglright
+fi fi
+fl fl
+daggerdbl daggerdbl
+periodcentered periodcentered
+quotesinglbase quotesinglbase
+quotedblbase quotedblbase
+perthousand perthousand
+Acircumflex Acircumflex
+Ecircumflex Ecircumflex
+Aacute Aacute
+Edieresis Edieresis
+Egrave Egrave
+Iacute Iacute
+Icircumflex Icircumflex
+Idieresis Idieresis
+Igrave Igrave
+Oacute Oacute
+Ocircumflex Ocircumflex
+apple apple
+Ograve Ograve
+Uacute Uacute
+Ucircumflex Ucircumflex
+Ugrave Ugrave
+dotlessi dotlessi
+circumflex circumflex
+tilde tilde
+macron macron
+breve breve
+dotaccent dotaccent
+ring ring
+cedilla cedilla
+hungarumlaut hungarumlaut
+ogonek ogonek
+caron caron
+Euro Euro

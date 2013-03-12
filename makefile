@@ -161,7 +161,7 @@ check: $(addsuffix .pfa,$(CE) $(EXPERT))
 clean:
 	@rm -fr $(BASE) $(addsuffix .ps,$(BASE)) \
 		$(addsuffix .pfa,$(BASE) $(CE) $(EXPERT) $(PRO)) \
-		empty.enc $(addsuffix .pfa,$(MERGE)) $(addsuffix .list,$(MERGE)) $(addsuffix .map,$(MERGE)) \
+		empty.enc $(addsuffix .pfa,$(MERGE)) $(addsuffix .list,$(MERGE)) $(filter-out Light/base.map Bold/base.map,$(addsuffix .map,$(MERGE))) \
 		$(addsuffix Kern.afm,$(BASE)) $(addsuffix /features.kern,$(STYLES)) \
 		$(addsuffix /fontrev,$(STYLES)) \
 		$(addsuffix /current.fpr,$(STYLES)) build \
