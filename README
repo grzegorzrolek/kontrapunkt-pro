@@ -31,10 +31,10 @@ only.
 SYSTEM REQUIREMENTS
 
 You will need a Unix system with Adobe Font Development Kit for OpenType
-available at http://adobe.com/devnet/opentype/afdko.html and LCDF
-Typetools with Type 1 Utilities at http://lcdf.org/type/. Because
-Adobe's FDK is Mac/Windows-only, this particular setting is currently
-possible with OS X alone.
+available at http://adobe.com/devnet/opentype/afdko.html and Type 1
+Utilities at http://lcdf.org/type/. Because Adobe's FDK is
+Mac/Windows-only, this particular setting is currently possible with
+OS X alone.
 
 
 CREDITS & LICENSE NOTICE

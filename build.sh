@@ -9,18 +9,12 @@
 
 
 # Check for critical tools.
-for TOOL in t1unmac t1disasm t1asm t1reencode mergeFonts rotateFont makeotf
+for TOOL in t1unmac t1disasm t1asm mergeFonts rotateFont makeotf
 do type $TOOL &>/dev/null || { echo >&2 "Fatal: No '$TOOL' found; see README for requirements."; exit 1; }
 done
 
 # Clean up existing builds, if any.
 rm -rf build && mkdir build
-
-# Dump an empty PostScript encoding vector for use in the merge process.
-# Type 1 Reencode could take it as an argument, but apparently fails on doing so.
-test -f empty.enc || printf '%s\n' '/Empty [' $(for SLOT in {1..256}
-	do echo '/.notdef'
-	done) '] def' >empty.enc
 
 # Iterate through subdirectories of the family styles.
 for STYLE in Light LightItalic Bold
@@ -116,8 +110,8 @@ do
 		# Extend the list of glyphs already included with those in the family's map.
 		SET=$(echo "$SET"; sed -e '/^mergeFonts$/d' -e '/^#.*$/d' -e 's/^\(..*\) \1$/\1/' $STYLE/$FAMILY.map)
 
-		# Build the font from its PostScript sources and null out the encoding to avoid conflicts on merge.
-		t1asm -a $FONT.ps | t1reencode -a -e empty.enc >$STYLE/$FAMILY.pfa
+		# Null out the font's encoding to avoid conflicts on merge, and assemble a Type 1 ASCII font file.
+		sed '/^dup [0-9][0-9]* \/..* put$/d' $FONT.ps | t1asm -a >$STYLE/$FAMILY.pfa
 
 	done
 

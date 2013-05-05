@@ -84,19 +84,16 @@ $(addsuffix .pfa,$(PRO)): %/font.pfa: %/font.ps $$(addsuffix .map,$$*/base $$*/c
 		wq | ed -s $@
 
 .SECONDEXPANSION:
-$(addsuffix .pfa,$(filter %expert,$(MERGE))): %/expert.pfa: $$(filter KontrapunktExpert/$$*/$$(WLDCRD),$$(EXPERT)).ps | empty.enc
-	t1asm -a $< | t1reencode -a -e empty.enc >$@
+$(addsuffix .pfa,$(filter %expert,$(MERGE))): %/expert.pfa: $$(filter KontrapunktExpert/$$*/$$(WLDCRD),$$(EXPERT)).ps
+	sed '/^dup [0-9][0-9]* \/..* put$$/d' $< | t1asm -a >$@
 
 .SECONDEXPANSION:
-$(addsuffix .pfa,$(filter %ce,$(MERGE))): %/ce.pfa: $$(filter KontrapunktCE/$$*/$$(WLDCRD),$$(CE)).ps | empty.enc
-	t1asm -a $< | t1reencode -a -e empty.enc >$@
+$(addsuffix .pfa,$(filter %ce,$(MERGE))): %/ce.pfa: $$(filter KontrapunktCE/$$*/$$(WLDCRD),$$(CE)).ps
+	sed '/^dup [0-9][0-9]* \/..* put$$/d' $< | t1asm -a >$@
 
 .SECONDEXPANSION:
-$(addsuffix .pfa,$(filter %base,$(MERGE))): %/base.pfa: $$(filter Kontrapunkt/$$*/$$(WLDCRD),$$(BASE)).ps | empty.enc
-	t1asm -a $< | t1reencode -a -e empty.enc >$@
-
-empty.enc:
-	printf '%s\n' '/Empty [' $(for SLOT in {1..256}; do echo '/.notdef'; done) '] def' >$@
+$(addsuffix .pfa,$(filter %base,$(MERGE))): %/base.pfa: $$(filter Kontrapunkt/$$*/$$(WLDCRD),$$(BASE)).ps
+	sed '/^dup [0-9][0-9]* \/..* put$$/d' $< | t1asm -a >$@
 
 .SECONDEXPANSION:
 $(foreach STYLE,$(STYLES),$(STYLE)/expert.map): %/expert.map: $$(filter KontrapunktExpert/$$*/$$(WLDCRD),$$(EXPERT)).ps %/font.ps %/base.map %/ce.map
@@ -161,7 +158,7 @@ check: $(addsuffix .pfa,$(CE) $(EXPERT))
 clean:
 	@rm -fr $(BASE) $(addsuffix .ps,$(BASE)) \
 		$(addsuffix .pfa,$(BASE) $(CE) $(EXPERT) $(PRO)) \
-		empty.enc $(addsuffix .pfa,$(MERGE)) $(addsuffix .list,$(MERGE)) $(filter-out Light/base.map Bold/base.map,$(addsuffix .map,$(MERGE))) \
+		$(addsuffix .pfa,$(MERGE)) $(addsuffix .list,$(MERGE)) $(filter-out Light/base.map Bold/base.map,$(addsuffix .map,$(MERGE))) \
 		$(addsuffix Kern.afm,$(BASE)) $(addsuffix /features.kern,$(STYLES)) \
 		$(addsuffix /fontrev,$(STYLES)) \
 		$(addsuffix /current.fpr,$(STYLES)) build \
