@@ -43,38 +43,13 @@ do
 	if ! test -f ${BASE}Kern.afm
 	then
 
-		# Byte offset to the kerning table is stored as four bytes at byte 131 in a PFM binary.
-		# PFM binaries have a little-endian byte order; be cautious on big-endian architectures.
-		# See Adobe's Technical Note #5178, Building PFM files... for a full spec.
-		OFFSET=$(hexdump -s 131 -n 4 -e '"%u"' $BASE.pfm)
-
-		# Number of kern pair entries: first 2 bytes of the table.
-		NO=$(hexdump -s $OFFSET -n 2 -e '/2 "%u"' $BASE.pfm)
-
-		# Dump the entries as newline-separated "char char value" sequences.
-		# Entries start at 2 bytes into the table, 4 bytes long each (two chars plus a signed short).
-		PAIRS=$(hexdump -s $(($OFFSET + 2)) -n $(($NO * 4)) -e '2/1 "%u " /2 " %i\n"' $BASE.pfm)
-
-		# Parse the related encoding file for a bare list of glyphs names.
-		NAMES=($(sed -n 's/^\/\(.*[^ []\)$/\1/p' <default.enc))
-
-		# Prepare proper kerning listing with a header/trailer and the entries by glyph name.
-		KERN=$(
-			echo "StartKernData"
-			echo "StartKernPairs $NO"
-			while read PAIR
-			do SEQ=($PAIR); echo "KPX ${NAMES[${SEQ[0]}]} ${NAMES[${SEQ[1]}]} ${SEQ[2]}"
-			done <<<"$PAIRS"
-			echo "EndKernPairs"
-			echo "EndKernData"
-		)
-
 		# Duplicate the original ASCII metrics into a new file with newlines instead of carriage returns.
 		# Note the locale change; this avoids 'tr' failure on some non-ASCII chars in the file.
 		LC_CTYPE=C; tr '\r' '\n' <$BASE.afm >${BASE}Kern.afm
 
 		# Insert the listing into the new metrics just after the EndCharMetrics line.
-		printf '%s\n' /EndCharMetrics/+1i "$KERN" . wq | ed -s ${BASE}Kern.afm
+		# Use kerndump.sh with the encoding the binaries were probably generated with originally.
+		printf '%s\n' /EndCharMetrics/+1i "$(sh kerndump.sh -e default.enc $BASE.pfm)" . wq | ed -s ${BASE}Kern.afm
 
 	fi
 

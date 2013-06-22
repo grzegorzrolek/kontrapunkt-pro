@@ -1,6 +1,4 @@
-% PostScript vector for FontLab's so-called Default Encoding,
-% the one Kontrapunkt's Windows binaries were probably generated with.
-% Used to convert kerning listing from PFM to AFM format.
+% PostScript vector for FontLab's so-called Default Encoding.
 
 /DefaultEncoding [
 /.notdef

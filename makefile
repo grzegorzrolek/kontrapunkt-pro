@@ -46,21 +46,8 @@ $(addsuffix /features.kern,$(STYLES)): %/features.kern: $$(filter Kontrapunkt/$$
 	sed -n 's/^KPX \(.*$$\)/pos \1;/p' >$@
 
 $(addsuffix Kern.afm,$(BASE)): %Kern.afm: %.pfm default.enc %.afm
-	OFFSET=$$(hexdump -s 131 -n 4 -e '"%u"' $*.pfm); \
-	NO=$$(hexdump -s $$OFFSET -n 2 -e '/2 "%u"' $*.pfm); \
-	PAIRS=$$(hexdump -s $$(($$OFFSET + 2)) -n $$(($$NO * 4)) -e '2/1 "%u " /2 " %i\n"' $*.pfm); \
-	NAMES=($$(sed -n 's/^\/\(.*[^ []\)$$/\1/p' <default.enc)); \
-	LC_CTYPE=C; tr '\r' '\n' <$*.afm >$@; \
-	KERN=$$( \
-		echo "StartKernData"; \
-		echo "StartKernPairs $$NO"; \
-		while read PAIR; \
-		do SEQ=($$PAIR); echo "KPX $${NAMES[$${SEQ[0]}]} $${NAMES[$${SEQ[1]}]} $${SEQ[2]}"; \
-		done <<<"$$PAIRS"; \
-		echo "EndKernPairs"; \
-		echo "EndKernData" \
-	); \
-	printf '%s\n' /EndCharMetrics/+1i "$$KERN" . wq | ed -s $@
+	LC_CTYPE=C; tr '\r' '\n' <$*.afm >$@
+	printf '%s\n' /EndCharMetrics/+1i "$$(sh kerndump.sh -e default.enc $*.pfm)" . wq | ed -s $@
 
 build:
 	mkdir build
