@@ -110,14 +110,8 @@ do
 	# Shift glyphs in their em-boxes or change their advance widths if necessary.
 	test -f $STYLE/shift.map && rotateFont -t1 -rtf $STYLE/shift.map $STYLE/font.pfa $STYLE/font.pfa
 
-	# Base the PostScript revision number on unique commit count of the source files involved.
-	PSREV=$(printf '%03d' $(git rev-list HEAD -- $STYLE/font.ps $CE.ps $EXPERT.ps $STYLE/*.map | wc -l))
-
-	# Make the processing.
-	ed -s $STYLE/font.pfa <<<'H
-		/^\(%!FontType1-1.1: ..* [0-9]\{3\}\.\)[0-9]\{3\}$/s//\1'$PSREV'/
-		/^\(\/version ([0-9]\{3\}\.\)[0-9]\{3\}\()\( readonly\)\{0,1\} def\)$/s//\1'$PSREV'\2/
-		wq'
+	# Reset the PostScript revision number with unique commit count of the source files involved.
+	sh t1rev.sh -r $(git rev-list HEAD -- $STYLE/font.ps $CE.ps $EXPERT.ps $STYLE/*.map | wc -l) $STYLE/font.pfa
 
 
 	# OPENTYPE COMPILATION

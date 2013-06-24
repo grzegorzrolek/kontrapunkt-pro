@@ -63,12 +63,8 @@ $(addsuffix .pfa,$(PRO)): %/font.pfa: %/font.ps $$(addsuffix .map,$$*/base $$*/c
 	t1asm -a $*/font.ps $@
 	mergeFonts $@ $@ $$(for FAMILY in base ce expert; do test $$(wc -w <$*/$$FAMILY.map) -gt 1 && echo $*/$$FAMILY.map $*/$$FAMILY.pfa; done)
 	-test -f $*/shift.map && rotateFont -t1 -rtf $*/shift.map $@ $@
-	PSREV=$$(printf '%03d' $$(git rev-list HEAD -- \
-		$*/font.ps $(filter KontrapunktCE/$*/%,$(CE)).ps $(filter KontrapunktExpert/$*/%,$(EXPERT)).ps $*/*.map | wc -l)); \
-	printf '%s\n' \
-		"/^\(%!FontType1-1.1: ..* [0-9]\{3\}\.\)[0-9]\{3\}$$/s//\1$$PSREV/" \
-		"/^\(\/version ([0-9]\{3\}\.\)[0-9]\{3\}\()\( readonly\)\{0,1\} def\)$$/s//\1$$PSREV\2/" \
-		wq | ed -s $@
+	sh t1rev.sh -r $$(git rev-list HEAD -- \
+		$*/font.ps $(filter KontrapunktCE/$*/%,$(CE)).ps $(filter KontrapunktExpert/$*/%,$(EXPERT)).ps $*/*.map | wc -l) $@
 
 .SECONDEXPANSION:
 $(addsuffix .pfa,$(filter %expert,$(MERGE))): %/expert.pfa: $$(filter KontrapunktExpert/$$*/$$(WLDCRD),$$(EXPERT)).ps
