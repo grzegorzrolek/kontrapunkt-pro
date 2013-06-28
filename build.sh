@@ -56,34 +56,12 @@ do
 
 	# MERGING THE EXTENDED CHARSET WITH THE BASE FAMILY
 
-	# Because 'mergeFonts' spits an error for each and every duplicate glyph it encounters in a merge queue,
-	# make a merge map for each family with a diff of new glyphs the family introduces.
-	# This also makes it possible to use a pre-prepared map and exclude any glyph of the original family,
-	# thus letting its duplicate in derived family to be merged in instead.
-
-	# Start making the diffs with a list of glyphs present in the Kontrapunkt Pro font file.
-	SET=$(sed -n '/^\/\(..*\) {$/s//\1/p' $STYLE/font.ps)
-
+	# Prepare intermediate fonts for merge.
 	for FAMILY in base ce expert
 	do
 
 		# Take out an actual path to the font of this particular family.
 		eval FONT=\$$(echo $FAMILY | tr 'a-z' 'A-Z')
-
-		# If there's no map for this family or if it's outdated, then make one with all the new glyphs the family provides.
-		if ! test -f $STYLE/$FAMILY.map || test -f $STYLE/$FAMILY.list && test $STYLE/$FAMILY.map -ot $FONT.ps
-		then
-
-			# Extract and dump a glyph list from the font for comparison.
-			sed -n '/^\/\(..*\) {$/s//\1/p' $FONT.ps | sort -u >$STYLE/$FAMILY.list
-
-			# Filter glyphs that haven't been introduced already and dump a merge map with a proper header.
-			printf '%s\n' 'mergeFonts' $(sort -u <<<"$SET" | comm -13 - $STYLE/$FAMILY.list) | sed '2,$s/^.*$/& &/' >$STYLE/$FAMILY.map
-
-		fi
-
-		# Extend the list of glyphs already included with those in the family's map.
-		SET=$(echo "$SET"; sed -e '/^mergeFonts$/d' -e '/^#.*$/d' -e 's/^\(..*\) \1$/\1/' $STYLE/$FAMILY.map)
 
 		# Null out the font's encoding to avoid conflicts on merge, and assemble a Type 1 ASCII font file.
 		sed '/^dup [0-9][0-9]* \/..* put$/d' $FONT.ps | t1asm -a >$STYLE/$FAMILY.pfa
@@ -93,16 +71,10 @@ do
 	# Build an empty Kontrapunkt Pro Type 1 ASCII font file.
 	t1asm -a $STYLE/font.ps $STYLE/font.pfa
 
-	# Merge each of the basic families into the Kontrapunkt Pro font file.
-	mergeFonts $STYLE/font.pfa $STYLE/font.pfa $(
-
-		# Make a family into the queue only if there's anything in particular to merge.
-		# This is necessery, because in case of an empty map the font's whole contents is merged.
-		for FAMILY in base ce expert
-		do test $(wc -w <$STYLE/$FAMILY.map) -gt 1 && echo $STYLE/$FAMILY.map $STYLE/$FAMILY.pfa
-		done
-
-	)
+	# Merge each of the basic families into the Kontrapunkt Pro font file with a wrapper on 'mergeFonts' utility.
+	# Pre-prepared maps exclude some glyphs of the original family,
+	# letting the duplicate glyphs in derived families to be merged in instead.
+	sh t1merge.sh $STYLE/font.pfa $STYLE/font.pfa $STYLE/base.pfa $STYLE/ce.pfa $STYLE/expert.pfa
 
 
 	# POST-PROCESSING

@@ -59,9 +59,10 @@ pro: $(addsuffix .pfa,$(PRO))
 
 .SECONDEXPANSION:
 .ONESHELL:
-$(addsuffix .pfa,$(PRO)): %/font.pfa: %/font.ps $$(addsuffix .map,$$*/base $$*/ce $$*/expert) $$(addsuffix .pfa,$$*/base $$*/ce $$*/expert) $$(wildcard $$*/shift.map)
+$(addsuffix .pfa,$(PRO)): %/font.pfa: %/font.ps $$(wildcard $$*/base.map) $$(wildcard $$*/ce.map) $$(wildcard $$*/expert.map) \
+	$$(addsuffix .pfa,$$*/base $$*/ce $$*/expert) $$(wildcard $$*/shift.map)
 	t1asm -a $*/font.ps $@
-	mergeFonts $@ $@ $$(for FAMILY in base ce expert; do test $$(wc -w <$*/$$FAMILY.map) -gt 1 && echo $*/$$FAMILY.map $*/$$FAMILY.pfa; done)
+	sh t1merge.sh $@ $@ $*/base.pfa $*/ce.pfa $*/expert.pfa
 	-test -f $*/shift.map && rotateFont -t1 -rtf $*/shift.map $@ $@
 	sh t1rev.sh -r $$(git rev-list HEAD -- \
 		$*/font.ps $(filter KontrapunktCE/$*/%,$(CE)).ps $(filter KontrapunktExpert/$*/%,$(EXPERT)).ps $*/*.map | wc -l) $@
@@ -77,26 +78,6 @@ $(addsuffix .pfa,$(filter %ce,$(MERGE))): %/ce.pfa: $$(filter KontrapunktCE/$$*/
 .SECONDEXPANSION:
 $(addsuffix .pfa,$(filter %base,$(MERGE))): %/base.pfa: $$(filter Kontrapunkt/$$*/$$(WLDCRD),$$(BASE)).ps
 	sed '/^dup [0-9][0-9]* \/..* put$$/d' $< | t1asm -a >$@
-
-.SECONDEXPANSION:
-$(foreach STYLE,$(STYLES),$(STYLE)/expert.map): %/expert.map: $$(filter KontrapunktExpert/$$*/$$(WLDCRD),$$(EXPERT)).ps %/font.ps %/base.map %/ce.map
-	sed -n '/^\/\(..*\) {$$/s//\1/p' $< | sort -u >$*/expert.list
-	SET=$$(sed -n '/^\/\(..*\) {$$/s//\1/p' $*/font.ps; \
-	sed -e '/^mergeFonts$$/d' -e '/^#.*$$/d' -e 's/^\(..*\) \1$$/\1/' $*/base.map $*/ce.map); \
-	printf '%s\n' 'mergeFonts' $$(sort -u <<<"$$SET" | comm -13 - $*/expert.list) | sed '2,$$s/^.*$$/& &/' >$@
-
-.SECONDEXPANSION:
-$(foreach STYLE,$(STYLES),$(STYLE)/ce.map): %/ce.map: $$(filter KontrapunktCE/$$*/$$(WLDCRD),$$(CE)).ps %/font.ps %/base.map
-	sed -n '/^\/\(..*\) {$$/s//\1/p' $< | sort -u >$*/ce.list
-	SET=$$(sed -n '/^\/\(..*\) {$$/s//\1/p' $*/font.ps; \
-	sed -e '/^mergeFonts$$/d' -e '/^#.*$$/d' -e 's/^\(..*\) \1$$/\1/' $*/base.map); \
-	printf '%s\n' 'mergeFonts' $$(sort -u <<<"$$SET" | comm -13 - $*/ce.list) | sed '2,$$s/^.*$$/& &/' >$@
-
-.SECONDEXPANSION:
-$(foreach STYLE,$(STYLES),$(STYLE)/base.map): %/base.map: %/font.ps | $$(filter Kontrapunkt/$$*/$$(WLDCRD),$$(BASE)).ps 
-	sed -n '/^\/\(..*\) {$$/s//\1/p' $| | sort -u >$*/base.list
-	SET=$$(sed -n '/^\/\(..*\) {$$/s//\1/p' $*/font.ps); \
-	printf '%s\n' 'mergeFonts' $$(sort -u <<<"$$SET" | comm -13 - $*/base.list) | sed '2,$$s/^.*$$/& &/' >$@
 
 $(addsuffix .ps,$(BASE)): %.ps: %
 	macbinary encode -p $< | t1unmac -a | t1disasm >$@
