@@ -2,11 +2,12 @@
 # Copyright 2012 Grzegorz Rolek
 #
 # Use MAKEOTF_OPTIONS to pass custom options into 'makeotf' compiler.
-# See build.sh for a commentary on the build process details.
 
 
 STYLES = Light LightItalic Bold
-STYS = Lig LigIta Bol
+
+# Short style names according to the "5:3:3" rule.
+STYS = $(foreach STYLE,$(STYLES),$(shell sed 's/\([A-Z][a-z]\{0,2\}\)[a-z]*/\1/g' <<<$(STYLE)))
 
 # Kontrapunkt Pro OpenType binaries.
 OTF = $(foreach STYLE,$(STYLES),build/KontrapunktPro-$(STYLE).otf)
@@ -30,9 +31,15 @@ WLDCRD = %
 
 # KONTRAPUNKT PRO OPENTYPE BINARIES
 
+# There's apparently no kerning listing in the original ASCII metrics, nor in the FOND resources,
+# but still, there's one in the printer binaries, so it's taken out and written into a new ASCII metrics file.
+# Feeding the kerndump.sh with encoding the binaries were probably generated with originally.
+# The font revision number (based on appropriate commit count) goes with a snippet included in the feature file.
+
 all: $(OTF)
 
-$(OTF): build/KontrapunktPro-%.otf: %/font.pfa %/features features.family FontMenuNameDB GlyphOrderAndAliasDB %/fontinfo | %/features.kern %/fontrev build
+$(OTF): build/KontrapunktPro-%.otf: %/font.pfa %/features features.family FontMenuNameDB GlyphOrderAndAliasDB %/fontinfo | \
+	%/features.kern %/fontrev build
 	makeotf -ga -f $< -o $@ $(MAKEOTF_OPTIONS)
 
 $(addsuffix /fontrev,$(STYLES)): %/fontrev: FontMenuNameDB GlyphOrderAndAliasDB %/features features.family %/fontinfo
@@ -54,6 +61,11 @@ build:
 
 
 # KONTRAPUNKT PRO TYPE 1 FAMILY
+
+# The encodings of all three basic families are nulled out to avoid conflicts on merge.
+# Pre-prepared merge maps exclude some glyphs of the original family,
+# letting the duplicate glyphs in derived families to be merged in instead.
+# PostScript revision number is reset with unique commit count of the source files involved.
 
 pro: $(addsuffix .pfa,$(PRO))
 
@@ -85,6 +97,9 @@ $(addsuffix .ps,$(BASE)): %.ps: %
 
 # BASE KONTRAPUNKT TYPE 1 FAMILY & DERIVATIVES
 
+# Mac-specific Type 1 fonts store font programs in POST resource forks;
+# they were archived with resource-savvy 'ditto' utility for repository storage.
+
 base: $(addsuffix .pfa,$(BASE))
 ce: $(addsuffix .pfa,$(CE))
 expert: $(addsuffix .pfa,$(EXPERT))
@@ -101,7 +116,7 @@ $(BASE): %: | %.cpgz
 	ditto -x $| $(dir $@)
 
 
-# TESTING
+# TESTING & CLEANING
 
 test: $(OTF)
 	@cd build; compareFamily; cd ..
@@ -116,8 +131,8 @@ check: $(addsuffix .pfa,$(CE) $(EXPERT))
 	checkOutlines -i -log $$FONT.log $$FONT.pfa | grep 'Warning:'; \
 	done
 
-
-# CLEANING
+cleanall: clean
+	@rm -fr build
 
 clean:
 	@rm -fr $(BASE) $(addsuffix .ps,$(BASE)) \
@@ -125,5 +140,5 @@ clean:
 		$(addsuffix .pfa,$(MERGE)) $(addsuffix .list,$(MERGE)) $(filter-out Light/base.map Bold/base.map,$(addsuffix .map,$(MERGE))) \
 		$(addsuffix Kern.afm,$(BASE)) $(addsuffix /features.kern,$(STYLES)) \
 		$(addsuffix /fontrev,$(STYLES)) \
-		$(addsuffix /current.fpr,$(STYLES)) build \
+		$(addsuffix /current.fpr,$(STYLES)) \
 		$(addsuffix .log,$(CE) $(EXPERT))

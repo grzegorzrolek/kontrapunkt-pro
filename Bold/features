@@ -24,7 +24,6 @@ feature case {
 
 
 # Kerning internal to each subfamily's charset is translated from AFM files on build.
-# See the build.sh for details.
 # Kerning across the charsets is listed directly.
 
 feature kern {
