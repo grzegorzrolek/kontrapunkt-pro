@@ -31,17 +31,15 @@ do
 	else MAP=$1; FONT=$2; shift 2
 	fi
 
-	LIST=$(dirname $MAP)/$(basename -s .map $MAP).list
-
-	# If there's no map for this font or if it's outdated, then make one with all the new glyphs the font provides.
-	if ! test -f $MAP || test -f $LIST && test $MAP -ot $FONT
+	# If there's no pre-prepared map for this font then make one with all the new glyphs the font provides.
+	if ! test -f $MAP
 	then
 
-		# Extract and dump a glyph list from the font for comparison.
-		t1disasm $FONT | sed -n '/^\/\(..*\) {$/s//\1/p' | sort -u >$LIST
+		# Extract a glyph list from the font for comparison, and filter glyphs that haven't been introduced already.
+		NEW=$(sort -u <<<"$SET" | comm -13 - <(t1disasm $FONT | sed -n '/^\/\(..*\) {$/s//\1/p' | sort -u))
 
-		# Filter glyphs that haven't been introduced already and dump a merge map with a proper header.
-		printf '%s\n' 'mergeFonts' $(sort -u <<<"$SET" | comm -13 - $LIST) | sed '2,$s/^.*$/& &/' >$MAP
+		# Dump properly formatted merge map.
+		printf '%s\n' 'mergeFonts' "$NEW" | sed '2,$s/^.*$/& &/' >$MAP
 
 	fi
 

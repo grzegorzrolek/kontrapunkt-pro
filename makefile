@@ -74,7 +74,7 @@ pro: $(addsuffix .pfa,$(PRO))
 $(addsuffix .pfa,$(PRO)): %/font.pfa: %/font.ps $$(wildcard $$*/base.map) $$(wildcard $$*/ce.map) $$(wildcard $$*/expert.map) \
 	$$(addsuffix .pfa,$$*/base $$*/ce $$*/expert) $$(wildcard $$*/shift.map)
 	t1asm -a $*/font.ps $@
-	sh t1merge.sh $@ $@ $*/base.pfa $*/ce.pfa $*/expert.pfa
+	bash t1merge.sh $@ $@ $*/base.pfa $*/ce.pfa $*/expert.pfa
 	-test -f $*/shift.map && rotateFont -t1 -rtf $*/shift.map $@ $@
 	sh t1rev.sh -r $$(git rev-list HEAD -- \
 		$*/font.ps $(filter KontrapunktCE/$*/%,$(CE)).ps $(filter KontrapunktExpert/$*/%,$(EXPERT)).ps $*/*.map | wc -l) $@
@@ -137,7 +137,7 @@ cleanall: clean
 clean:
 	@rm -fr $(BASE) $(addsuffix .ps,$(BASE)) \
 		$(addsuffix .pfa,$(BASE) $(CE) $(EXPERT) $(PRO)) \
-		$(addsuffix .pfa,$(MERGE)) $(addsuffix .list,$(MERGE)) $(filter-out Light/base.map Bold/base.map,$(addsuffix .map,$(MERGE))) \
+		$(addsuffix .pfa,$(MERGE)) $(filter-out Light/base.map Bold/base.map,$(addsuffix .map,$(MERGE))) \
 		$(addsuffix Kern.afm,$(BASE)) $(addsuffix /features.kern,$(STYLES)) \
 		$(addsuffix /fontrev,$(STYLES)) \
 		$(addsuffix /current.fpr,$(STYLES)) \

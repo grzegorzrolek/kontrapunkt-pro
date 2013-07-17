@@ -5,7 +5,6 @@ Kontrapunkt
 empty.enc
 
 # Intermediate builds
-*.list
 *.map
 !shift.map
 !Light/base.map
